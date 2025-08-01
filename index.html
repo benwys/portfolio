@@ -1,21 +1,158 @@
 <!DOCTYPE html>
 <html lang="pl">
-    <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moje Portfolio</title>
-    
-    <!-- Tutaj łączymy nasz plik CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <title>Portfolio - Twoje Imię</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/themes.css">
 </head>
-<body>
+<body class="dark-theme">
+    <div class="container">
+        <header>
+            <!-- 
+            div class="theme-toggle">
+                <button id="themeToggle" class="theme-btn">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div> -->
+            <h1>Benedykt Wysocki</h1>
+            <p class="subtitle">Web Developer & Designer</p>
+        </header>
 
-    <!-- To jest nasza główna sekcja -->
-    <section class="hero-section">
-        <h1>Cześć, jestem Benek</h1>
-        <p>Tworzę proste i nowoczesne strony internetowe.</p>
-        <a href="#" class="cta-button">Zobacz moje prace</a>
-    </section>
+        <nav>
+            <button class="nav-btn active" onclick="showSection('home')">Strona Główna</button>
+            <button class="nav-btn" onclick="showSection('projects')">Projekty</button>
+            <button class="nav-btn" onclick="showSection('about')">O Mnie</button>
+            <button class="nav-btn" onclick="showSection('skills')">Umiejętności</button>
+            <button class="nav-btn" onclick="showSection('contact')">Kontakt</button>
+        </nav>
 
+        <main>
+            <section id="home" class="section active">
+                <div class="about-content">
+                    <h2>Witaj w moim cyfrowym świecie</h2>
+                    <p>Jestem pasjonatem technologii, który tworzy nowoczesne rozwiązania webowe łączące funkcjonalność z estetyką. Specjalizuję się w tworzeniu responsywnych stron internetowych i aplikacji, które wyróżniają się zarówno designem, jak i wydajnością.</p>
+                    <p>Odkryj moje projekty, poznaj moje umiejętności i daj się zainspirować moją wizją cyfrowej przyszłości.</p>
+                </div>
+            </section>
+
+            <section id="projects" class="section">
+                <div class="grid">
+                    <div class="card" data-project="ecommerce">
+                        <h3>E-commerce Platform</h3>
+                        <p>Kompleksowa platforma e-commerce zbudowana z wykorzystaniem nowoczesnych technologii. Responsywny design, szybkie ładowanie i intuicyjna obsługa.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card" data-project="portfolio">
+                        <h3>Portfolio Website</h3>
+                        <p>Minimalistyczna strona portfolio z retro estetyką. Projekt skupia się na czytelności treści i płynnej nawigacji.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card" data-project="taskapp">
+                        <h3>Task Management App</h3>
+                        <p>Aplikacja do zarządzania zadaniami z możliwością colaboracji zespołowej. Intuicyjny interfejs i zaawansowane funkcje organizacyjne.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">PWA</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card" data-project="weather">
+                        <h3>Weather Dashboard</h3>
+                        <p>Interaktywny dashboard pogodowy z wizualizacją danych i prognozami. Integracja z zewnętrznymi API i responsywny design.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Chart.js</span>
+                            <span class="tech-tag">API</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="section">
+                <div class="about-content">
+                    <h2>O Mnie</h2>
+                    <p>Jestem kreatywnym deweloperem z pasją do tworzenia wyjątkowych doświadczeń cyfrowych. Moja droga w świecie programowania rozpoczęła się kilka lat temu, kiedy odkryłem fascynujący świat web developmentu.</p>
+                    <p>Specjalizuję się w front-end developmencie, ale nie stronię od wyzwań związanych z back-endem. Uwielbiam eksperymentować z nowymi technologiami i trendami w designie, zawsze dążąc do perfekcji w każdym projekcie.</p>
+                    <p>Poza programowaniem interesuję się designem UX/UI, fotografią cyfrową i muzyką elektroniczną, które inspirują mnie w codziennej pracy.</p>
+                </div>
+            </section>
+
+            <section id="skills" class="section">
+                <div class="about-content">
+                    <h2>Umiejętności</h2>
+                    <div class="skills">
+                        <div class="skill">
+                            <h3>HTML5 & CSS3</h3>
+                            <p>Zaawansowana znajomość semantycznego HTML i nowoczesnego CSS</p>
+                        </div>
+                        <div class="skill">
+                            <h3>JavaScript</h3>
+                            <p>ES6+, asynchroniczne programowanie, DOM manipulation</p>
+                        </div>
+                        <div class="skill">
+                            <h3>React</h3>
+                            <p>Komponenty, hooks, state management, Next.js</p>
+                        </div>
+                        <div class="skill">
+                            <h3>Node.js</h3>
+                            <p>Server-side JavaScript, Express.js, API development</p>
+                        </div>
+                        <div class="skill">
+                            <h3>Design</h3>
+                            <p>UI/UX, Figma, Adobe Creative Suite, responsive design</p>
+                        </div>
+                        <div class="skill">
+                            <h3>Tools</h3>
+                            <p>Git, Webpack, npm/yarn, VSCode, Chrome DevTools</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="section">
+                <div class="contact-form">
+                    <h2>Skontaktuj się ze mną</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Imię</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Temat</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Wiadomość</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Wyślij Wiadomość</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Stworzone z pasją i retro vibe.</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
