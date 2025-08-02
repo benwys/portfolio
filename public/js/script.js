@@ -228,7 +228,7 @@ async function handleFormSubmit(e) {
 
     try {
         // Wysyłamy dane do naszego LOKALNEGO backendu
-        const response = await fetch('http://localhost:3000/api/send-message', {
+        const response = await fetch('/api/send-message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
