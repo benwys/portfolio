@@ -209,69 +209,46 @@ function initializeForm() {
     }
 }
 
+// w pliku public/js/script.js
+
 async function handleFormSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    const submitButton = form.querySelector('button[type="submit"]'); // Znajdź przycisk wysyłania
-
-    // Pobierz dane z formularza
-    const formData = new FormData(form);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const subject = formData.get('subject');
-    const message = formData.get('message');
     
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
     // Walidacja po stronie klienta
-    if (!name || !email || !subject || !message) {
+    if (!data.name || !data.email || !data.subject || !data.message) {
         showNotification('Proszę wypełnić wszystkie pola!', 'error');
         return;
     }
     
-    if (!isValidEmail(email)) {
-        showNotification('Proszę podać prawidłowy adres email!', 'error');
-        return;
-    }
-    
-    // Pokaż status wysyłania i zablokuj przycisk
     showNotification('Wysyłanie wiadomości...', 'info');
-    if(submitButton) {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Wysyłanie...';
-    }
-    
+
     try {
-        // Wyślij dane do naszej funkcji backendowej
-        const response = await fetch('/api/send-message', {
+        // Wysyłamy dane do naszego LOKALNEGO backendu
+        const response = await fetch('http://localhost:3000/api/send-message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, subject, message }),
+            body: JSON.stringify(data),
         });
 
-        // Sprawdź odpowiedź z naszego serwera
+        const result = await response.json();
+
         if (response.ok) {
             showNotification('Dziękuję za wiadomość! Została wysłana pomyślnie.', 'success');
             form.reset();
         } else {
-            // Jeśli serwer zwrócił błąd, pokaż go
-            const errorData = await response.json();
-            showNotification(`Błąd: ${errorData.message || 'Nie udało się wysłać wiadomości.'}`, 'error');
+            showNotification(`Błąd: ${result.message}`, 'error');
         }
-
     } catch (error) {
-        // Błąd sieci lub serwer nie odpowiada
-        console.error('Błąd wysyłania formularza:', error);
-        showNotification('Błąd sieci. Spróbuj ponownie później.', 'error');
-    } finally {
-        // Niezależnie od wyniku, odblokuj przycisk
-        if(submitButton) {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Wyślij';
-        }
+        console.error('Błąd:', error);
+        showNotification('Nie można połączyć się z serwerem. Upewnij się, że jest uruchomiony!', 'error');
     }
 }
-
 
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
