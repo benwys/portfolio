@@ -17,11 +17,11 @@
                 </button>
             </div> -->
             <h1>Benedykt Wysocki</h1>
-            <p class="subtitle">Web Developer & Designer</p>
+            <p class="subtitle">Automation & Robotics Engineering Student</p>
         </header>
 
         <nav>
-            <button class="nav-btn active" onclick="showSection('home')">Strona Główna</button>
+            <button class="nav-btn" onclick="showSection('home')">Strona Główna</button>
             <button class="nav-btn" onclick="showSection('projects')">Projekty</button>
             <button class="nav-btn" onclick="showSection('about')">O Mnie</button>
             <button class="nav-btn" onclick="showSection('skills')">Umiejętności</button>
@@ -31,51 +31,39 @@
         <main>
             <section id="home" class="section active">
                 <div class="about-content">
-                    <h2>Witaj w moim cyfrowym świecie</h2>
-                    <p>Jestem pasjonatem technologii, który tworzy nowoczesne rozwiązania webowe łączące funkcjonalność z estetyką. Specjalizuję się w tworzeniu responsywnych stron internetowych i aplikacji, które wyróżniają się zarówno designem, jak i wydajnością.</p>
-                    <p>Odkryj moje projekty, poznaj moje umiejętności i daj się zainspirować moją wizją cyfrowej przyszłości.</p>
+                    <h2>Witaj w moim technicznym świecie</h2>
+                    <p>Pasjonat inżynierii i technologii, który łączy wiedzę z zakresu automatyki, robotyki i informatyki w projektach osadzonych w rzeczywistości. Tworzę rozwiązania, które nie tylko działają, ale też rozwiązują konkretne problemy - od sterowania urządzeniami po wizualizację danych w czasie rzeczywistym.</p>
+                    <p>Zajrzyj do moich projektów, sprawdź, jak łączę teorię z praktyką, i zobacz, dokąd prowadzi mnie pasja do systemów, które myślą, reagują i współdziałają.</p>
                 </div>
             </section>
 
             <section id="projects" class="section">
                 <div class="grid">
-                    <div class="card" data-project="ecommerce">
-                        <h3>E-commerce Platform</h3>
-                        <p>Kompleksowa platforma e-commerce zbudowana z wykorzystaniem nowoczesnych technologii. Responsywny design, szybkie ładowanie i intuicyjna obsługa.</p>
+                    <div class="card" data-project="localweb">
+                        <h3>Strona internetowa hostowana lokalnie</h3>
+                        <p>Autorska strona internetowa stworzona z wykorzystaniem narzędzi AI (m.in. do generowania treści i stylów), uruchomiona na lokalnym serwerze opartym o Raspberry Pi.</p>
                         <div class="tech-stack">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Raspberry Pi</span>
+                            <span class="tech-tag">web development</span>
+                            <span class="tech-tag">serwer lokalny</span>
                         </div>
                     </div>
-                    
-                    <div class="card" data-project="portfolio">
-                        <h3>Portfolio Website</h3>
-                        <p>Minimalistyczna strona portfolio z retro estetyką. Projekt skupia się na czytelności treści i płynnej nawigacji.</p>
+                    <div class="card" data-project="watering">
+                        <h3>Inteligentny system nawadniania roślin</h3>
+                        <p>Automatyczny system, który monitoruje wilgotność gleby i steruje pompką wody. Prosty i praktyczny układ oparty na zasadzie odczyt–decyzja–akcja.</p>
                         <div class="tech-stack">
-                            <span class="tech-tag">HTML5</span>
-                            <span class="tech-tag">CSS3</span>
-                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Arduino</span>
+                            <span class="tech-tag">elektronika domowa</span>
+                            <span class="tech-tag">IoT</span>
                         </div>
                     </div>
-                    
-                    <div class="card" data-project="taskapp">
-                        <h3>Task Management App</h3>
-                        <p>Aplikacja do zarządzania zadaniami z możliwością colaboracji zespołowej. Intuicyjny interfejs i zaawansowane funkcje organizacyjne.</p>
+                    <div class="card" data-project="robotarm">
+                        <h3>Ramię robota sterowane przez internet</h3>
+                        <p>Ramię robota (druk 3D lub gotowy zestaw) sterowane zdalnie przez przeglądarkę. Umożliwia ruchy w czasie rzeczywistym i testowanie prostych algorytmów kinematyki.</p>
                         <div class="tech-stack">
-                            <span class="tech-tag">Vue.js</span>
-                            <span class="tech-tag">Firebase</span>
-                            <span class="tech-tag">PWA</span>
-                        </div>
-                    </div>
-                    
-                    <div class="card" data-project="weather">
-                        <h3>Weather Dashboard</h3>
-                        <p>Interaktywny dashboard pogodowy z wizualizacją danych i prognozami. Integracja z zewnętrznymi API i responsywny design.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Chart.js</span>
-                            <span class="tech-tag">API</span>
+                            <span class="tech-tag">ESP32</span>
+                            <span class="tech-tag">robotyka</span>
+                            <span class="tech-tag">web interface</span>
                         </div>
                     </div>
                 </div>
@@ -84,9 +72,10 @@
             <section id="about" class="section">
                 <div class="about-content">
                     <h2>O Mnie</h2>
-                    <p>Jestem kreatywnym deweloperem z pasją do tworzenia wyjątkowych doświadczeń cyfrowych. Moja droga w świecie programowania rozpoczęła się kilka lat temu, kiedy odkryłem fascynujący świat web developmentu.</p>
-                    <p>Specjalizuję się w front-end developmencie, ale nie stronię od wyzwań związanych z back-endem. Uwielbiam eksperymentować z nowymi technologiami i trendami w designie, zawsze dążąc do perfekcji w każdym projekcie.</p>
-                    <p>Poza programowaniem interesuję się designem UX/UI, fotografią cyfrową i muzyką elektroniczną, które inspirują mnie w codziennej pracy.</p>
+                <p>Jestem studentem Automatyki i Robotyki Stosowanej na Politechnice Warszawskiej, z zamiłowaniem do rozwiązań technicznych, elektroniki oraz systemów sterowania. Od początku studiów staram się łączyć wiedzę akademicką z praktyką — realizując projekty DIY, biorąc udział w kursach technicznych i angażując się w działalność koła naukowego ZTS (Zrób To Sam).</p>
+                <p> Interesuję się szeroko pojętą automatyką, robotyką i programowaniem systemów wbudowanych. Mam doświadczenie z mikrokontrolerami (Arduino, Raspberry Pi), projektowaniem prostych układów, pracą w AutoCAD oraz podstawami języków Python i C.</p>
+                <p>Oprócz świata techniki, prowadzę gromadę harcerską w organizacji FSE - uczę odpowiedzialności, organizacji i pracy zespołowej, co przekłada się także na moje podejście do projektów inżynierskich. Inspirują mnie rzeczy praktyczne, które można zbudować i które naprawdę działają.</p>
+
                 </div>
             </section>
 
@@ -95,29 +84,43 @@
                     <h2>Umiejętności</h2>
                     <div class="skills">
                         <div class="skill">
-                            <h3>HTML5 & CSS3</h3>
-                            <p>Zaawansowana znajomość semantycznego HTML i nowoczesnego CSS</p>
+                            <h3>Python</h3>
+                            <p>Podstawy języka, skrypty automatyzujące, obsługa danych</p>
                         </div>
                         <div class="skill">
-                            <h3>JavaScript</h3>
-                            <p>ES6+, asynchroniczne programowanie, DOM manipulation</p>
+                            <h3>C / C++</h3>
+                            <p>Pisanie prostych programów na mikrokontrolery, praca z rejestrami, logika sterowania</p>
                         </div>
                         <div class="skill">
-                            <h3>React</h3>
-                            <p>Komponenty, hooks, state management, Next.js</p>
+                            <h3>Linux &amp; Bash</h3>
+                            <p>Praca w terminalu, instalacja oprogramowania, struktura systemu plików</p>
                         </div>
                         <div class="skill">
-                            <h3>Node.js</h3>
-                            <p>Server-side JavaScript, Express.js, API development</p>
+                            <h3>Sieci komputerowe</h3>
+                            <p>Koncepcje sieciowe, konfiguracja routerów/switchy</p>
                         </div>
                         <div class="skill">
-                            <h3>Design</h3>
-                            <p>UI/UX, Figma, Adobe Creative Suite, responsive design</p>
+                            <h3>AutoCAD</h3>
+                            <p>Tworzenie i edycja rysunków technicznych, podstawy modelowania 2D i 3D</p>
                         </div>
                         <div class="skill">
-                            <h3>Tools</h3>
-                            <p>Git, Webpack, npm/yarn, VSCode, Chrome DevTools</p>
+                            <h3>Arduino, ESP32</h3>
+                            <p>Obsługa sensorów i aktuatorów, prototypowanie systemów automatyki</p>
                         </div>
+                        <div class="skill">
+                            <h3>Systemy wbudowane</h3>
+                            <p>Zrozumienie architektury mikrokontrolerów, programowanie na niskim poziomie</p>
+                        </div>
+                        <div class="skill">
+                            <h3>Elektronika</h3>
+                            <p>Podstawy projektowania obwodów, czytanie schematów, lutowanie</p>
+                        </div>
+                        <!-- 
+                        <div class="skill">
+                            <h3>Git &amp; GitHub</h3>
+                            <p>Podstawy kontroli wersji, współpraca zespołowa, dokumentacja projektów</p>
+                        </div>
+                        --->
                     </div>
                 </div>
             </section>
@@ -149,7 +152,7 @@
         </main>
 
         <footer>
-            <p>Stworzone z pasją i retro vibe.</p>
+            <p>Stworzone z pasją i retro vibem.</p>
         </footer>
     </div>
 

@@ -2,15 +2,62 @@
 
 // Zmienne globalne
 let currentTheme = 'dark';
-/*
-// Inicjalizacja po załadowaniu strony
+
+// --- NATYCHMIASTOWE POKAZANIE WŁAŚCIWEJ SEKCJI PRZED DOMContentLoaded ---
+// Ten blok musi być na samym początku pliku!
+(function() {
+    // Obsługa hash w URL przy starcie (przed DOMContentLoaded)
+    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'home';
+    const validSections = ['home', 'projects', 'about', 'skills', 'contact'];
+    if (!validSections.includes(sectionFromHash)) {
+        sectionFromHash = 'home';
+    }
+    // Ukryj wszystkie sekcje
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+    // Pokaż wybraną sekcję
+    const targetSection = document.getElementById(sectionFromHash);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+    // Zaktualizuj aktywny przycisk nawigacji
+    const buttons = document.querySelectorAll('.nav-btn');
+    buttons.forEach(button => {
+        const btnSection = button.textContent.trim().toLowerCase();
+        if (
+            (btnSection === 'strona główna' && sectionFromHash === 'home') ||
+            (btnSection === 'projekty' && sectionFromHash === 'projects') ||
+            (btnSection === 'o mnie' && sectionFromHash === 'about') ||
+            (btnSection === 'umiejętności' && sectionFromHash === 'skills') ||
+            (btnSection === 'kontakt' && sectionFromHash === 'contact')
+        ) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+})();
+
 document.addEventListener('DOMContentLoaded', function() {
-    initializeTheme();
+    //initializeTheme();
     initializeTypeWriter();
     initializeForm();
     initializeScrollEffects();
+    // Nie wywołuj showSection na starcie, bo już to zrobiliśmy powyżej
 });
-*/
+
+// Obsługa zmiany hash (np. cofanie/ponawianie w przeglądarce)
+window.addEventListener('hashchange', function() {
+    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'home';
+    const validSections = ['home', 'projects', 'about', 'skills', 'contact'];
+    if (!validSections.includes(sectionFromHash)) {
+        sectionFromHash = 'home';
+    }
+    showSection(sectionFromHash, false);
+});
+
 // === ZARZĄDZANIE MOTYWAMI ===
 /*
 function initializeTheme() {
@@ -74,29 +121,42 @@ function getSavedTheme() {
 */
 // === NAWIGACJA ===
 
-function showSection(sectionName) {
+function showSection(sectionName, updateHash = true) {
     // Ukryj wszystkie sekcje
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
         section.classList.remove('active');
     });
-    
+
     // Pokaż wybraną sekcję
     const targetSection = document.getElementById(sectionName);
     if (targetSection) {
         targetSection.classList.add('active');
     }
-    
+
     // Zaktualizuj aktywny przycisk nawigacji
     const buttons = document.querySelectorAll('.nav-btn');
     buttons.forEach(button => {
-        button.classList.remove('active');
+        // Sprawdź czy tekst przycisku odpowiada sekcji
+        const btnSection = button.textContent.trim().toLowerCase();
+        if (
+            (btnSection === 'strona główna' && sectionName === 'home') ||
+            (btnSection === 'projekty' && sectionName === 'projects') ||
+            (btnSection === 'o mnie' && sectionName === 'about') ||
+            (btnSection === 'umiejętności' && sectionName === 'skills') ||
+            (btnSection === 'kontakt' && sectionName === 'contact')
+        ) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
     });
-    
-    // Znajdź kliknięty przycisk i oznacz jako aktywny
-    const clickedButton = event.target;
-    clickedButton.classList.add('active');
-    
+
+    // Zmień hash w URL jeśli trzeba
+    if (updateHash) {
+        window.location.hash = sectionName;
+    }
+
     // Przewiń do góry sekcji
     window.scrollTo({
         top: 0,
@@ -378,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
         card.addEventListener('click', function() {
             const projectId = card.getAttribute('data-project');
             if (projectId) {
-                window.location.href = `project-${projectId}.html`;
+                window.location.href = `projects/project-${projectId}.html`;
             }
         });
     });
@@ -391,30 +451,21 @@ document.addEventListener('keydown', function(e) {
     // ESC - powrót do strony głównej
     if (e.key === 'Escape') {
         showSection('home');
-        document.querySelector('.nav-btn').click();
     }
-    
+
     // Cyfry 1-5 - nawigacja do sekcji
     const sectionMap = {
         '1': 'home',
-        '2': 'projects', 
+        '2': 'projects',
         '3': 'about',
         '4': 'skills',
         '5': 'contact'
     };
-    
+
     if (sectionMap[e.key]) {
         showSection(sectionMap[e.key]);
-        // Znajdź odpowiedni przycisk i oznacz jako aktywny
-        const buttons = document.querySelectorAll('.nav-btn');
-        buttons.forEach((btn, index) => {
-            btn.classList.remove('active');
-            if (index === parseInt(e.key) - 1) {
-                btn.classList.add('active');
-            }
-        });
     }
-    
+
     // T - toggle theme
     if (e.key.toLowerCase() === 't' && e.ctrlKey) {
         e.preventDefault();
