@@ -1,5 +1,5 @@
 // server.js
-
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config(); // Ta linia wczytuje dane z pliku .env
