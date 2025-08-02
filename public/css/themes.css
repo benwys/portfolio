@@ -16,9 +16,6 @@
     --tag-bg: rgba(233, 69, 96, 0.2);
     --input-bg: rgba(15, 52, 96, 0.2);
     --accent-shadow: rgba(233, 69, 96, 0.3);
-    
-    background: var(--bg-gradient);
-    color: var(--text-color);
 }
 
 /* Light Theme */
@@ -37,14 +34,15 @@
     --tag-bg: rgba(52, 152, 219, 0.1);
     --input-bg: rgba(255, 255, 255, 0.9);
     --accent-shadow: rgba(52, 152, 219, 0.2);
-    
-    background: var(--bg-gradient);
-    color: var(--text-color);
 }
 
 /* Płynne przejścia między motywami */
 body {
     transition: background 0.5s ease, color 0.3s ease;
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    /* Zapewnia ciągłość gradientu nawet przy przewijaniu */
+    color: var(--text-color);
 }
 
 .card, .skill, .form-group input, .form-group textarea {
