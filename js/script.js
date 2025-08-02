@@ -200,17 +200,28 @@ function initializeForm() {
     }
 }
 
-function handleFormSubmit(e) {
+// === FORMULARZ KONTAKTOWY ===
+
+function initializeForm() {
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', handleFormSubmit);
+    }
+}
+
+async function handleFormSubmit(e) {
     e.preventDefault();
-    
+    const form = e.target;
+    const submitButton = form.querySelector('button[type="submit"]'); // Znajdź przycisk wysyłania
+
     // Pobierz dane z formularza
-    const formData = new FormData(e.target);
+    const formData = new FormData(form);
     const name = formData.get('name');
     const email = formData.get('email');
     const subject = formData.get('subject');
     const message = formData.get('message');
     
-    // Walidacja
+    // Walidacja po stronie klienta
     if (!name || !email || !subject || !message) {
         showNotification('Proszę wypełnić wszystkie pola!', 'error');
         return;
@@ -221,14 +232,46 @@ function handleFormSubmit(e) {
         return;
     }
     
-    // Symulacja wysyłania
+    // Pokaż status wysyłania i zablokuj przycisk
     showNotification('Wysyłanie wiadomości...', 'info');
+    if(submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Wysyłanie...';
+    }
     
-    setTimeout(() => {
-        showNotification('Dziękuję za wiadomość! Odpowiem tak szybko jak to możliwe.', 'success');
-        e.target.reset();
-    }, 1500);
+    try {
+        // Wyślij dane do naszej funkcji backendowej
+        const response = await fetch('/api/send-message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, subject, message }),
+        });
+
+        // Sprawdź odpowiedź z naszego serwera
+        if (response.ok) {
+            showNotification('Dziękuję za wiadomość! Została wysłana pomyślnie.', 'success');
+            form.reset();
+        } else {
+            // Jeśli serwer zwrócił błąd, pokaż go
+            const errorData = await response.json();
+            showNotification(`Błąd: ${errorData.message || 'Nie udało się wysłać wiadomości.'}`, 'error');
+        }
+
+    } catch (error) {
+        // Błąd sieci lub serwer nie odpowiada
+        console.error('Błąd wysyłania formularza:', error);
+        showNotification('Błąd sieci. Spróbuj ponownie później.', 'error');
+    } finally {
+        // Niezależnie od wyniku, odblokuj przycisk
+        if(submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Wyślij';
+        }
+    }
 }
+
 
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
