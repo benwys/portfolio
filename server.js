@@ -6,6 +6,7 @@ require('dotenv').config(); // Ta linia wczytuje dane z pliku .env
 
 const app = express();
 const PORT = 3000; // Nasz backend będzie działał na porcie 3000
+const HOST = '0.0.0.0'; // <-- Dodaj tę linię
 
 // Middleware
 app.use(cors()); // Zgoda na komunikację z Live Server
@@ -51,6 +52,6 @@ app.post('/api/send-message', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`✅ Backend nasłuchuje na http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => { // <-- Zmień tutaj
+    console.log(`✅ Backend nasłuchuje na http://${HOST}:${PORT}`);
 });
