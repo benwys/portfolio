@@ -11,6 +11,7 @@ const PORT = 3000; // Nasz backend będzie działał na porcie 3000
 app.use(cors()); // Zgoda na komunikację z Live Server
 app.use(express.json()); // Pozwalamy serwerowi przyjmować dane w formacie JSON
 
+app.use(express.static(path.join(__dirname, 'public')));
 // Endpoint, na który frontend będzie wysyłał dane
 app.post('/api/send-message', async (req, res) => {
     const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
