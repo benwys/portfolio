@@ -200,6 +200,15 @@ nav {
     margin-bottom: 15px;
 }
 
+/* Project Image */
+.project-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
 /* Tech Stack */
 .tech-stack {
     display: flex;
@@ -376,4 +385,39 @@ footer {
         text-align: right;
         margin-bottom: 20px;
     }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .theme-btn,
+  .nav-btn,
+  .card,
+  .card::before,
+  .skill,
+  .form-group input,
+  .form-group textarea,
+  .submit-btn {
+    transition: none;
+  }
+
+  h1,
+  .section {
+    animation: none;
+  }
+
+  .theme-btn:hover,
+  .nav-btn:hover,
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .card:hover {
+      border-color: var(--border-color);
+  }
+  
+  .card:hover::before {
+      display: none;
+  }
 }

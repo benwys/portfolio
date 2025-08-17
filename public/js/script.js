@@ -2,6 +2,7 @@
 
 // Zmienne globalne
 let currentTheme = 'dark';
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // --- NATYCHMIASTOWE POKAZANIE WŁAŚCIWEJ SEKCJI PRZED DOMContentLoaded ---
 // Ten blok musi być na samym początku pliku!
@@ -12,31 +13,32 @@ let currentTheme = 'dark';
     if (!validSections.includes(sectionFromHash)) {
         sectionFromHash = 'about';
     }
-    // Ukryj wszystkie sekcje
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        section.classList.remove('active');
-    });
-    // Pokaż wybraną sekcję
+    // Działaj tylko, jeśli docelowa sekcja istnieje (na stronie głównej).
     const targetSection = document.getElementById(sectionFromHash);
     if (targetSection) {
+        // Ukryj wszystkie sekcje
+        const sections = document.querySelectorAll('.section');
+        sections.forEach(section => {
+            section.classList.remove('active');
+        });
+        // Pokaż wybraną sekcję
         targetSection.classList.add('active');
+        // Zaktualizuj aktywny przycisk nawigacji
+        const buttons = document.querySelectorAll('.nav-btn');
+        buttons.forEach(button => {
+            const btnSection = button.textContent.trim().toLowerCase();
+            if (
+                (btnSection === 'o mnie' && sectionFromHash === 'about') ||
+                (btnSection === 'projekty' && sectionFromHash === 'projects') ||
+                (btnSection === 'umiejętności' && sectionFromHash === 'skills') ||
+                (btnSection === 'kontakt' && sectionFromHash === 'contact')
+            ) {
+                button.classList.add('active');
+            } else {
+                button.classList.remove('active');
+            }
+        });
     }
-    // Zaktualizuj aktywny przycisk nawigacji
-    const buttons = document.querySelectorAll('.nav-btn');
-    buttons.forEach(button => {
-        const btnSection = button.textContent.trim().toLowerCase();
-        if (
-            (btnSection === 'o mnie' && sectionFromHash === 'about') ||
-            (btnSection === 'projekty' && sectionFromHash === 'projects') ||
-            (btnSection === 'umiejętności' && sectionFromHash === 'skills') ||
-            (btnSection === 'kontakt' && sectionFromHash === 'contact')
-        ) {
-            button.classList.add('active');
-        } else {
-            button.classList.remove('active');
-        }
-    });
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -140,17 +142,22 @@ function getSavedTheme() {
 // === NAWIGACJA ===
 
 function showSection(sectionName, updateHash = true) {
-    // Ukryj wszystkie sekcje
+    // Pokaż wybraną sekcję (tylko jeśli istnieje na tej stronie)
+    const targetSection = document.getElementById(sectionName);
+    if (!targetSection) {
+        // Jeśli jesteśmy na podstronie projektu, przenieś do strony głównej z odpowiednim hashem
+        if (window.location.pathname.includes('/projects/')) {
+            window.location.href = `../index.html#${sectionName}`;
+        }
+        return;
+    }
+
+    // Ukryj wszystkie sekcje i aktywuj docelową
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
         section.classList.remove('active');
     });
-
-    // Pokaż wybraną sekcję
-    const targetSection = document.getElementById(sectionName);
-    if (targetSection) {
-        targetSection.classList.add('active');
-    }
+    targetSection.classList.add('active');
 
     // Zaktualizuj aktywny przycisk nawigacji
     const buttons = document.querySelectorAll('.nav-btn');
@@ -177,13 +184,14 @@ function showSection(sectionName, updateHash = true) {
     // Przewiń do góry sekcji
     window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
     });
 }
 
 // === EFEKT PISANIA ===
 
 function initializeTypeWriter() {
+    if (prefersReducedMotion) return;
     const title = document.querySelector('h1');
     const originalText = title.innerText;
     
@@ -304,26 +312,39 @@ function showNotification(message, type = 'info') {
     document.body.appendChild(notification);
     
     // Animacja pojawienia
-    setTimeout(() => {
+    if (prefersReducedMotion) {
         notification.style.opacity = '1';
         notification.style.transform = 'translateX(0)';
-    }, 100);
-    
+    } else {
+        setTimeout(() => {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+    }
+
     // Automatyczne usunięcie po 4 sekundach
     setTimeout(() => {
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
+        if (prefersReducedMotion) {
             if (notification.parentNode) {
                 notification.remove();
             }
-        }, 300);
+        } else {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 300);
+        }
     }, 4000);
+
 }
 
 // === EFEKTY SCROLL ===
 
 function initializeScrollEffects() {
+    if (prefersReducedMotion) return;
     // Obserwator dla animacji przy scrollowaniu
     const observerOptions = {
         threshold: 0.1,
@@ -463,7 +484,7 @@ const konamiCode = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft',
 let konamiIndex = 0;
 
 function activateMatrixMode() {
-    if (document.body.classList.contains('matrix-theme')) return;
+    if (document.body.classList.contains('matrix-theme') || prefersReducedMotion) return;
     document.body.className = 'matrix-theme';
     showNotification('Matrix mode activated!', 'info');
     startMatrixRain();

@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Twoje Imię</title>
+    <title>Benedykt Wysocki - Portfolio | Automatyka i Robotyka</title>
+    <meta name="description" content="Portfolio Benedykta Wysockiego, studenta Automatyki i Robotyki na Politechnice Warszawskiej. Odkryj projekty z zakresu IoT, robotyki, systemów wbudowanych i programowania.">
+    <meta property="og:title" content="Benedykt Wysocki - Portfolio | Automatyka i Robotyka">
+    <meta property="og:description" content="Portfolio studenta Automatyki i Robotyki. Projekty, umiejętności i pasja do technologii.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://benedyktwysocki.me">
+    <meta property="og:image" content="https://benedyktwysocki.me/assets/images/LogoBW.png">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/themes.css">
 </head>
@@ -21,7 +27,7 @@
             <p class="subtitle">Automation & Robotics Engineering Student</p>
         </header>
 
-        <nav>
+        <nav aria-label="Główna nawigacja">
             <button class="nav-btn" onclick="showSection('about')">O Mnie</button>
             <button class="nav-btn" onclick="showSection('projects')">Projekty</button>
             <button class="nav-btn" onclick="showSection('skills')">Umiejętności</button>
@@ -40,99 +46,7 @@
             </section>
 
             <section id="projects" class="section">
-                <div class="grid">
-                    <div class="card" data-project="localweb">
-                        <h3>Strona internetowa hostowana lokalnie</h3>
-                        <p>Autorska strona internetowa stworzona z wykorzystaniem narzędzi AI (m.in. do generowania treści i stylów), uruchomiona na lokalnym serwerze opartym o Raspberry Pi.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Raspberry Pi</span>
-                            <span class="tech-tag">web development</span>
-                            <span class="tech-tag">serwer lokalny</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="watering">
-                        <h3>Inteligentny system nawadniania roślin</h3>
-                        <p>Automatyczny system, który monitoruje wilgotność gleby i steruje pompką wody. Prosty i praktyczny układ oparty na zasadzie odczyt–decyzja–akcja.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Arduino</span>
-                            <span class="tech-tag">elektronika domowa</span>
-                            <span class="tech-tag">IoT</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="robotarm">
-                        <h3>Ramię robota sterowane przez internet</h3>
-                        <p>Ramię robota (druk 3D lub gotowy zestaw) sterowane zdalnie przez przeglądarkę. Umożliwia ruchy w czasie rzeczywistym i testowanie prostych algorytmów kinematyki.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">ESP32</span>
-                            <span class="tech-tag">robotyka</span>
-                            <span class="tech-tag">web interface</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="home-automation">
-                        <h3>Dashboard automatyki domowej</h3>
-                        <p>Panel sterowania do zarządzania urządzeniami w domu (oświetlenie, czujniki) przez interfejs webowy. Komunikacja oparta o protokół MQTT.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Raspberry Pi</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">MQTT</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="line-follower">
-                        <h3>Robot typu Line Follower</h3>
-                        <p>Autonomiczny robot mobilny, którego zadaniem jest podążanie za czarną linią na białym tle. Projekt oparty na algorytmie regulatora PID.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Arduino</span>
-                            <span class="tech-tag">C++</span>
-                            <span class="tech-tag">Regulator PID</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="object-detection">
-                        <h3>Detekcja obiektów w czasie rzeczywistym</h3>
-                        <p>System wykorzystujący kamerę internetową i bibliotekę OpenCV do rozpoznawania i klasyfikowania obiektów na żywo.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">OpenCV</span>
-                            <span class="tech-tag">Computer Vision</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="cnc-plotter">
-                        <h3>Plotter CNC</h3>
-                        <p>Prosta maszyna CNC do rysowania obrazów z plików G-code. Projekt mechaniczny i elektroniczny oparty na Arduino i sterownikach silników krokowych.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">Arduino</span>
-                            <span class="tech-tag">G-code</span>
-                            <span class="tech-tag">Silniki krokowe</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="weather-station">
-                        <h3>Stacja pogodowa z E-Ink</h3>
-                        <p>Urządzenie zbierające dane o temperaturze, wilgotności i ciśnieniu, wyświetlające je na energooszczędnym ekranie E-Ink.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">ESP32</span>
-                            <span class="tech-tag">E-Ink</span>
-                            <span class="tech-tag">BME280</span>
-                        </div>
-                    </div>
-                    <div class="card" data-project="fpv-drone">
-                        <h3>Budowa drona FPV</h3>
-                        <p>Złożenie i konfiguracja drona wyścigowego FPV od podstaw. Dobór komponentów, lutowanie, konfiguracja w Betaflight.</p>
-                        <div class="tech-stack">
-                            <span class="tech-tag">FPV</span>
-                            <span class="tech-tag">Betaflight</span>
-                            <span class="tech-tag">Elektronika</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="about" class="section">
-                <div class="about-content">
-                    <h2>O Mnie</h2>
-                <p>Jestem studentem Automatyki i Robotyki Stosowanej na Politechnice Warszawskiej, z zamiłowaniem do rozwiązań technicznych, elektroniki oraz systemów sterowania. Od początku studiów staram się łączyć wiedzę akademicką z praktyką — realizując projekty DIY, biorąc udział w kursach technicznych i angażując się w działalność koła naukowego ZTS (Zrób To Sam).</p>
-                <p> Interesuję się szeroko pojętą automatyką, robotyką i programowaniem systemów wbudowanych. Mam doświadczenie z mikrokontrolerami (Arduino, Raspberry Pi), projektowaniem prostych układów, pracą w AutoCAD oraz podstawami języków Python i C.</p>
-                <p>Oprócz świata techniki, prowadzę gromadę harcerską w organizacji FSE - uczę odpowiedzialności, organizacji i pracy zespołowej, co przekłada się także na moje podejście do projektów inżynierskich. Inspirują mnie rzeczy praktyczne, które można zbudować i które naprawdę działają.</p>
-
-                </div>
+                <div class="grid" id="projects-grid"></div>
             </section>
 
             <section id="skills" class="section">
@@ -214,5 +128,42 @@
     </div>
 
     <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/projects')
+                .then(response => response.json())
+                .then(projects => {
+                    const grid = document.getElementById('projects-grid');
+                    if (!grid) return;
+
+                    projects.forEach(project => {
+                        const card = document.createElement('div');
+                        card.className = 'card';
+                        card.onclick = () => { window.location.href = `/projects/${project.slug}`; };
+
+                        const title = document.createElement('h3');
+                        title.textContent = project.title;
+
+                        const description = document.createElement('p');
+                        description.textContent = project.description;
+
+                        const techStack = document.createElement('div');
+                        techStack.className = 'tech-stack';
+                        project.technologies.forEach(tech => {
+                            const techTag = document.createElement('span');
+                            techTag.className = 'tech-tag';
+                            techTag.textContent = tech;
+                            techStack.appendChild(techTag);
+                        });
+
+                        card.appendChild(title);
+                        card.appendChild(description);
+                        card.appendChild(techStack);
+                        grid.appendChild(card);
+                    });
+                })
+                .catch(error => console.error('Błąd podczas ładowania projektów:', error));
+        });
+    </script>
 </body>
 </html>
