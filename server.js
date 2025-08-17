@@ -113,7 +113,7 @@ app.get('/projects/:slug', (req, res) => {
             <link rel="stylesheet" href="/css/styles.css">
             <link rel="stylesheet" href="/css/themes.css">
         </head>
-        <body class="dark-theme">
+        <body>
             <canvas id="matrix-canvas"></canvas>
             <div class="container">
                 <header>

@@ -1,8 +1,25 @@
 // js/script.js - Główna logika aplikacji
 
 // Zmienne globalne
-let currentTheme = 'dark';
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// --- NATYCHMIASTOWE ZASTOSOWANIE MOTYWU --- 
+// Musi być na samej górze, aby uniknąć migotania.
+(function() {
+    let theme = 'dark';
+    const navigationType = performance.getEntriesByType("navigation")[0].type;
+
+    if (navigationType === 'reload') {
+        sessionStorage.removeItem('portfolio-theme');
+    } else {
+        theme = sessionStorage.getItem('portfolio-theme') || 'dark';
+    }
+
+    document.documentElement.className = `${theme}-theme`;
+    if (theme === 'matrix') {
+        document.body.classList.add('matrix-theme');
+    }
+})();
 
 // --- NATYCHMIASTOWE POKAZANIE WŁAŚCIWEJ SEKCJI PRZED DOMContentLoaded ---
 // Ten blok musi być na samym początku pliku!
@@ -42,7 +59,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
-    //initializeTheme();
+    initializeTheme();
     initializeTypeWriter();
     initializeForm();
     initializeScrollEffects();
@@ -79,66 +96,40 @@ window.addEventListener('hashchange', function() {
 });
 
 // === ZARZĄDZANIE MOTYWAMI ===
-/*
+
 function initializeTheme() {
-    // Sprawdź zapisany motyw w localStorage (jeśli używane poza Claude.ai)
-    const savedTheme = getSavedTheme();
-    if (savedTheme) {
-        currentTheme = savedTheme;
-        document.body.className = `${currentTheme}-theme`;
+    const savedTheme = sessionStorage.getItem('portfolio-theme') || 'dark';
+
+    // Jeśli motyw to matrix, upewnij się, że animacja jest aktywna.
+    if (savedTheme === 'matrix') {
+        startMatrixRain();
     }
-    
-    // Ustaw ikonę przycisku
-    updateThemeIcon();
-    
-    // Dodaj event listener do przycisku
+
+    // Logika dla przycisku zmiany motywu (jeśli zostanie w przyszłości odkomentowany)
     const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', toggleTheme);
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+}
+
+function applyTheme(theme) {
+    document.documentElement.className = `${theme}-theme`;
+    sessionStorage.setItem('portfolio-theme', theme);
+
+    if (theme === 'matrix') {
+        document.body.classList.add('matrix-theme');
+        startMatrixRain();
+    } else {
+        document.body.classList.remove('matrix-theme');
+        stopMatrixRain();
+    }
 }
 
 function toggleTheme() {
-    // Dodaj klasę przejścia
-    document.body.classList.add('theme-transition');
-    
-    // Zmień motyw
-    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.body.className = `${currentTheme}-theme theme-transition`;
-    
-    // Zapisz preferencję
-    saveTheme(currentTheme);
-    
-    // Zaktualizuj ikonę
-    updateThemeIcon();
-    
-    // Usuń klasę przejścia po animacji
-    setTimeout(() => {
-        document.body.classList.remove('theme-transition');
-    }, 500);
+    let currentTheme = sessionStorage.getItem('portfolio-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(newTheme);
 }
-
-function updateThemeIcon() {
-    const themeIcon = document.querySelector('.theme-icon');
-    themeIcon.textContent = currentTheme === 'dark' ? '' : '';
-}
-
-function saveTheme(theme) {
-    // Zapisz w pamięci sesji (działa w Claude.ai)
-    try {
-        sessionStorage.setItem('portfolio-theme', theme);
-    } catch (e) {
-        // Fallback jeśli sessionStorage nie jest dostępny
-        console.log('Theme saved in memory only');
-    }
-}
-
-function getSavedTheme() {
-    try {
-        return sessionStorage.getItem('portfolio-theme') || 'dark';
-    } catch (e) {
-        return 'dark';
-    }
-}
-*/
 // === NAWIGACJA ===
 
 function showSection(sectionName, updateHash = true) {
@@ -483,11 +474,15 @@ function fallbackCopyToClipboard(text) {
 const konamiCode = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
 let konamiIndex = 0;
 
-function activateMatrixMode() {
-    if (document.body.classList.contains('matrix-theme') || prefersReducedMotion) return;
-    document.body.className = 'matrix-theme';
-    showNotification('Matrix mode activated!', 'info');
-    startMatrixRain();
+function activateMatrixMode(showNotif = true) {
+    if (document.documentElement.className.includes('matrix-theme') || prefersReducedMotion) return;
+    
+    applyTheme('matrix');
+
+    if (showNotif) {
+        showNotification('Matrix mode activated!', 'info');
+    }
+
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
         themeToggle.style.display = 'none';
@@ -586,10 +581,21 @@ function startMatrixRain() {
     const canvas = document.getElementById('matrix-canvas');
     if (!canvas || matrixRainInterval) return; // Już działa
 
+    canvas.style.display = 'block';
     setupMatrixCanvas();
     matrixRainInterval = setInterval(drawMatrix, 33);
 }
 
+function stopMatrixRain() {
+    const canvas = document.getElementById('matrix-canvas');
+    if (canvas) {
+        canvas.style.display = 'none';
+    }
+    if (matrixRainInterval) {
+        clearInterval(matrixRainInterval);
+        matrixRainInterval = null;
+    }
+}
 
 // === PERFORMANCE OPTIMIZATION ===
 
