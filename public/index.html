@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/themes.css">
 </head>
 <body class="dark-theme">
+    <canvas id="matrix-canvas"></canvas>
     <div class="container">
         <header>
             <!-- 
@@ -21,19 +22,20 @@
         </header>
 
         <nav>
-            <button class="nav-btn" onclick="showSection('home')">Strona Główna</button>
-            <button class="nav-btn" onclick="showSection('projects')">Projekty</button>
             <button class="nav-btn" onclick="showSection('about')">O Mnie</button>
+            <button class="nav-btn" onclick="showSection('projects')">Projekty</button>
             <button class="nav-btn" onclick="showSection('skills')">Umiejętności</button>
             <button class="nav-btn" onclick="showSection('contact')">Kontakt</button>
         </nav>
 
         <main>
-            <section id="home" class="section active">
+            <section id="about" class="section active">
                 <div class="about-content">
                     <h2>Witaj w moim technicznym świecie</h2>
-                    <p>Pasjonat inżynierii i technologii, który łączy wiedzę z zakresu automatyki, robotyki i informatyki w projektach osadzonych w rzeczywistości. Tworzę rozwiązania, które nie tylko działają, ale też rozwiązują konkretne problemy - od sterowania urządzeniami po wizualizację danych w czasie rzeczywistym.</p>
-                    <p>Zajrzyj do moich projektów, sprawdź, jak łączę teorię z praktyką, i zobacz, dokąd prowadzi mnie pasja do systemów, które myślą, reagują i współdziałają.</p>
+                <p>Jestem studentem Automatyki i Robotyki Stosowanej na Politechnice Warszawskiej, z zamiłowaniem do rozwiązań technicznych, elektroniki oraz systemów sterowania. Od początku studiów staram się łączyć wiedzę akademicką z praktyką — realizując projekty DIY, biorąc udział w kursach technicznych i angażując się w działalność koła naukowego ZTS (Zrób To Sam).</p>
+                <p> Interesuję się szeroko pojętą automatyką, robotyką i programowaniem systemów wbudowanych. Mam doświadczenie z mikrokontrolerami (Arduino, Raspberry Pi), projektowaniem prostych układów, pracą w AutoCAD oraz podstawami języków Python i C.</p>
+                <p>Oprócz świata techniki, prowadzę gromadę harcerską w organizacji FSE - uczę odpowiedzialności, organizacji i pracy zespołowej, co przekłada się także na moje podejście do projektów inżynierskich. Inspirują mnie rzeczy praktyczne, które można zbudować i które naprawdę działają.</p>
+
                 </div>
             </section>
 
@@ -64,6 +66,60 @@
                             <span class="tech-tag">ESP32</span>
                             <span class="tech-tag">robotyka</span>
                             <span class="tech-tag">web interface</span>
+                        </div>
+                    </div>
+                    <div class="card" data-project="home-automation">
+                        <h3>Dashboard automatyki domowej</h3>
+                        <p>Panel sterowania do zarządzania urządzeniami w domu (oświetlenie, czujniki) przez interfejs webowy. Komunikacja oparta o protokół MQTT.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Raspberry Pi</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MQTT</span>
+                        </div>
+                    </div>
+                    <div class="card" data-project="line-follower">
+                        <h3>Robot typu Line Follower</h3>
+                        <p>Autonomiczny robot mobilny, którego zadaniem jest podążanie za czarną linią na białym tle. Projekt oparty na algorytmie regulatora PID.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Arduino</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Regulator PID</span>
+                        </div>
+                    </div>
+                    <div class="card" data-project="object-detection">
+                        <h3>Detekcja obiektów w czasie rzeczywistym</h3>
+                        <p>System wykorzystujący kamerę internetową i bibliotekę OpenCV do rozpoznawania i klasyfikowania obiektów na żywo.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">OpenCV</span>
+                            <span class="tech-tag">Computer Vision</span>
+                        </div>
+                    </div>
+                    <div class="card" data-project="cnc-plotter">
+                        <h3>Plotter CNC</h3>
+                        <p>Prosta maszyna CNC do rysowania obrazów z plików G-code. Projekt mechaniczny i elektroniczny oparty na Arduino i sterownikach silników krokowych.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Arduino</span>
+                            <span class="tech-tag">G-code</span>
+                            <span class="tech-tag">Silniki krokowe</span>
+                        </div>
+                    </div>
+                    <div class="card" data-project="weather-station">
+                        <h3>Stacja pogodowa z E-Ink</h3>
+                        <p>Urządzenie zbierające dane o temperaturze, wilgotności i ciśnieniu, wyświetlające je na energooszczędnym ekranie E-Ink.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">ESP32</span>
+                            <span class="tech-tag">E-Ink</span>
+                            <span class="tech-tag">BME280</span>
+                        </div>
+                    </div>
+                    <div class="card" data-project="fpv-drone">
+                        <h3>Budowa drona FPV</h3>
+                        <p>Złożenie i konfiguracja drona wyścigowego FPV od podstaw. Dobór komponentów, lutowanie, konfiguracja w Betaflight.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">FPV</span>
+                            <span class="tech-tag">Betaflight</span>
+                            <span class="tech-tag">Elektronika</span>
                         </div>
                     </div>
                 </div>
@@ -153,6 +209,7 @@
 
         <footer>
             <p>Stworzone z pasją i retro vibem.</p>
+            <p class="easter-egg-hint">↑ ↑ ↓ ↓ ← → ← → B A</p>
         </footer>
     </div>
 

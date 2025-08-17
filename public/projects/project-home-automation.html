@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Projekt: Ramię robota sterowane przez internet</title>
+    <title>Projekt: Dashboard Automatyki Domowej</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/themes.css">
@@ -10,23 +10,23 @@
 <body class="dark-theme">
     <div class="container">
         <header>
-            <h1>Ramię robota sterowane przez internet</h1>
-            <p class="subtitle">Zdalne sterowanie manipulatorem</p>
+            <h1>Dashboard Automatyki Domowej</h1>
+            <p class="subtitle">Zdalne sterowanie i monitoring urządzeń</p>
             <a href="../index.html#projects" class="nav-btn" style="margin-top:20px;display:inline-block;">← Powrót</a>
         </header>
         <section class="section active" id="project-details">
             <div class="card">
                 <h3>Opis projektu</h3>
                 <p>
-                    Celem projektu było zbudowanie ramienia robota (z gotowego zestawu lub druku 3D) i umożliwienie sterowania nim w czasie rzeczywistym za pośrednictwem interfejsu webowego. Sercem układu jest mikrokontroler ESP32, który obsługuje serwomechanizmy i jednocześnie hostuje serwer WWW. Użytkownik, za pomocą przeglądarki, może kontrolować ruchy poszczególnych osi robota.
+                    Projekt polegał na stworzeniu centralnego punktu do zarządzania inteligentnym domem. Sercem systemu jest serwer Raspberry Pi z brokerem MQTT, który pośredniczy w komunikacji między urządzeniami (np. modułami ESP32 z czujnikami i przekaźnikami) a interfejsem użytkownika. Panel webowy, napisany w Node.js, pozwala na monitorowanie stanu czujników (temperatura, wilgotność) oraz zdalne sterowanie oświetleniem i innymi urządzeniami.
                 </p>
                 <h3>Technologie</h3>
                 <div class="tech-stack">
+                    <span class="tech-tag">Raspberry Pi</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MQTT</span>
                     <span class="tech-tag">ESP32</span>
-                    <span class="tech-tag">Arduino</span>
-                    <span class="tech-tag">Serwomechanizmy</span>
-                    <span class="tech-tag">Web Interface</span>
-                    <span class="tech-tag">Druk 3D</span>
+                    <span class="tech-tag">WebSockets</span>
                 </div>
             </div>
         </section>
@@ -34,8 +34,5 @@
     <footer>
         <p>Stworzone z pasją i retro vibem.</p>
     </footer>
-</body>
-</html>
-    </div>
 </body>
 </html>

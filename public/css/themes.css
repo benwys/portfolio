@@ -36,6 +36,44 @@
     --accent-shadow: rgba(52, 152, 219, 0.2);
 }
 
+/* Matrix Theme (Easter Egg) */
+.matrix-theme {
+    --bg-color: #000000;
+    --bg-gradient: linear-gradient(135deg, #020c06 0%, #000000 100%);
+    --text-color: #00ff41;
+    --text-secondary: #00ff41;
+    --text-footer: #008F11;
+    --primary-color: #00ff41;
+    --accent-color: #008F11;
+    --border-color: #008F11;
+    --card-bg: rgba(0, 255, 65, 0.05);
+    --skill-bg: rgba(0, 255, 65, 0.05);
+    --skill-hover-bg: rgba(0, 255, 65, 0.1);
+    --tag-bg: rgba(0, 255, 65, 0.1);
+    --input-bg: rgba(0, 255, 65, 0.05);
+    --accent-shadow: rgba(0, 255, 65, 0.3);
+}
+
+.matrix-theme #matrix-canvas {
+    display: block;
+}
+
+.matrix-theme h1,
+.matrix-theme h2,
+.matrix-theme h3,
+.matrix-theme p,
+.matrix-theme .nav-btn,
+.matrix-theme .submit-btn,
+.matrix-theme label,
+.matrix-theme input,
+.matrix-theme textarea {
+    text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+}
+
+.matrix-theme .easter-egg-hint {
+    opacity: 0.15;
+}
+
 /* Płynne przejścia między motywami */
 body {
     transition: background 0.5s ease, color 0.3s ease;

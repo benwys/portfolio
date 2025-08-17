@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Projekt: Ramię robota sterowane przez internet</title>
+    <title>Projekt: Plotter CNC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/themes.css">
@@ -10,23 +10,24 @@
 <body class="dark-theme">
     <div class="container">
         <header>
-            <h1>Ramię robota sterowane przez internet</h1>
-            <p class="subtitle">Zdalne sterowanie manipulatorem</p>
+            <h1>Plotter CNC</h1>
+            <p class="subtitle">Maszyna do rysowania sterowana numerycznie</p>
             <a href="../index.html#projects" class="nav-btn" style="margin-top:20px;display:inline-block;">← Powrót</a>
         </header>
         <section class="section active" id="project-details">
             <div class="card">
                 <h3>Opis projektu</h3>
                 <p>
-                    Celem projektu było zbudowanie ramienia robota (z gotowego zestawu lub druku 3D) i umożliwienie sterowania nim w czasie rzeczywistym za pośrednictwem interfejsu webowego. Sercem układu jest mikrokontroler ESP32, który obsługuje serwomechanizmy i jednocześnie hostuje serwer WWW. Użytkownik, za pomocą przeglądarki, może kontrolować ruchy poszczególnych osi robota.
+                    Projekt obejmował zaprojektowanie, wydrukowanie w 3D i złożenie mechaniki prostego plotera CNC. Układ sterowania oparty jest na Arduino z oprogramowaniem GRBL, które interpretuje G-code. Do sterowania silnikami krokowymi osi X i Y wykorzystano sterowniki A4988. Projekt pozwolił na praktyczne zrozumienie zasad działania maszyn CNC, kalibracji oraz generowania ścieżek narzędzia.
                 </p>
                 <h3>Technologie</h3>
                 <div class="tech-stack">
-                    <span class="tech-tag">ESP32</span>
                     <span class="tech-tag">Arduino</span>
-                    <span class="tech-tag">Serwomechanizmy</span>
-                    <span class="tech-tag">Web Interface</span>
+                    <span class="tech-tag">GRBL</span>
+                    <span class="tech-tag">G-code</span>
+                    <span class="tech-tag">Silniki krokowe</span>
                     <span class="tech-tag">Druk 3D</span>
+                    <span class="tech-tag">A4988</span>
                 </div>
             </div>
         </section>
@@ -34,8 +35,5 @@
     <footer>
         <p>Stworzone z pasją i retro vibem.</p>
     </footer>
-</body>
-</html>
-    </div>
 </body>
 </html>

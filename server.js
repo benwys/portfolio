@@ -52,6 +52,12 @@ app.post('/api/send-message', async (req, res) => {
     }
 });
 
+// Obsługa routingu dla podstron projektów
+app.get('/projects/:projectName', (req, res) => {
+    const projectName = req.params.projectName;
+    res.sendFile(path.join(__dirname, 'public', 'projects', projectName));
+});
+
 app.listen(PORT, HOST, () => { // <-- Zmień tutaj
     console.log(`✅ Backend nasłuchuje na http://${HOST}:${PORT}`);
 });

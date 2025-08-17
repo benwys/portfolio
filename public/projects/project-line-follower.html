@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Projekt: Ramię robota sterowane przez internet</title>
+    <title>Projekt: Robot Line Follower</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/themes.css">
@@ -10,23 +10,23 @@
 <body class="dark-theme">
     <div class="container">
         <header>
-            <h1>Ramię robota sterowane przez internet</h1>
-            <p class="subtitle">Zdalne sterowanie manipulatorem</p>
+            <h1>Robot Line Follower</h1>
+            <p class="subtitle">Autonomiczny robot podążający za linią</p>
             <a href="../index.html#projects" class="nav-btn" style="margin-top:20px;display:inline-block;">← Powrót</a>
         </header>
         <section class="section active" id="project-details">
             <div class="card">
                 <h3>Opis projektu</h3>
                 <p>
-                    Celem projektu było zbudowanie ramienia robota (z gotowego zestawu lub druku 3D) i umożliwienie sterowania nim w czasie rzeczywistym za pośrednictwem interfejsu webowego. Sercem układu jest mikrokontroler ESP32, który obsługuje serwomechanizmy i jednocześnie hostuje serwer WWW. Użytkownik, za pomocą przeglądarki, może kontrolować ruchy poszczególnych osi robota.
+                    Celem projektu było zbudowanie i zaprogramowanie robota mobilnego, który potrafi autonomicznie podążać wzdłuż wyznaczonej linii. Robot został wyposażony w zestaw czujników podczerwieni do detekcji linii oraz mostek H do sterowania silnikami DC. Kluczowym elementem oprogramowania jest implementacja regulatora PID, który na podstawie odczytów z czujników koryguje prędkość obrotową kół, zapewniając płynny i precyzyjny ruch.
                 </p>
                 <h3>Technologie</h3>
                 <div class="tech-stack">
-                    <span class="tech-tag">ESP32</span>
                     <span class="tech-tag">Arduino</span>
-                    <span class="tech-tag">Serwomechanizmy</span>
-                    <span class="tech-tag">Web Interface</span>
-                    <span class="tech-tag">Druk 3D</span>
+                    <span class="tech-tag">C++</span>
+                    <span class="tech-tag">Regulator PID</span>
+                    <span class="tech-tag">Czujniki IR</span>
+                    <span class="tech-tag">Mostek H</span>
                 </div>
             </div>
         </section>
@@ -34,8 +34,5 @@
     <footer>
         <p>Stworzone z pasją i retro vibem.</p>
     </footer>
-</body>
-</html>
-    </div>
 </body>
 </html>

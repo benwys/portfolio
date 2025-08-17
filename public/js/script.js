@@ -7,10 +7,10 @@ let currentTheme = 'dark';
 // Ten blok musi być na samym początku pliku!
 (function() {
     // Obsługa hash w URL przy starcie (przed DOMContentLoaded)
-    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'home';
-    const validSections = ['home', 'projects', 'about', 'skills', 'contact'];
+    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'about';
+    const validSections = ['about', 'projects', 'skills', 'contact'];
     if (!validSections.includes(sectionFromHash)) {
-        sectionFromHash = 'home';
+        sectionFromHash = 'about';
     }
     // Ukryj wszystkie sekcje
     const sections = document.querySelectorAll('.section');
@@ -27,9 +27,8 @@ let currentTheme = 'dark';
     buttons.forEach(button => {
         const btnSection = button.textContent.trim().toLowerCase();
         if (
-            (btnSection === 'strona główna' && sectionFromHash === 'home') ||
-            (btnSection === 'projekty' && sectionFromHash === 'projects') ||
             (btnSection === 'o mnie' && sectionFromHash === 'about') ||
+            (btnSection === 'projekty' && sectionFromHash === 'projects') ||
             (btnSection === 'umiejętności' && sectionFromHash === 'skills') ||
             (btnSection === 'kontakt' && sectionFromHash === 'contact')
         ) {
@@ -45,15 +44,34 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeTypeWriter();
     initializeForm();
     initializeScrollEffects();
+    initializeA11y();
     // Nie wywołuj showSection na starcie, bo już to zrobiliśmy powyżej
+
+    // Obsługa kliknięcia na kartę projektu
+    const projectCards = document.querySelectorAll('#projects .card[data-project]');
+    projectCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function() {
+            const projectId = card.getAttribute('data-project');
+            if (projectId) {
+                window.location.href = `projects/project-${projectId}.html`;
+            }
+        });
+    });
+
+    // Auto-aktywacja trybu Matrix po północy
+    const currentHour = new Date().getHours();
+    if (currentHour >= 0 && currentHour < 3) { // Od północy do 3:00
+        setTimeout(activateMatrixMode, 500);
+    }
 });
 
 // Obsługa zmiany hash (np. cofanie/ponawianie w przeglądarce)
 window.addEventListener('hashchange', function() {
-    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'home';
-    const validSections = ['home', 'projects', 'about', 'skills', 'contact'];
+    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'about';
+    const validSections = ['about', 'projects', 'skills', 'contact'];
     if (!validSections.includes(sectionFromHash)) {
-        sectionFromHash = 'home';
+        sectionFromHash = 'about';
     }
     showSection(sectionFromHash, false);
 });
@@ -140,9 +158,8 @@ function showSection(sectionName, updateHash = true) {
         // Sprawdź czy tekst przycisku odpowiada sekcji
         const btnSection = button.textContent.trim().toLowerCase();
         if (
-            (btnSection === 'strona główna' && sectionName === 'home') ||
-            (btnSection === 'projekty' && sectionName === 'projects') ||
             (btnSection === 'o mnie' && sectionName === 'about') ||
+            (btnSection === 'projekty' && sectionName === 'projects') ||
             (btnSection === 'umiejętności' && sectionName === 'skills') ||
             (btnSection === 'kontakt' && sectionName === 'contact')
         ) {
@@ -189,15 +206,6 @@ function typeWriter(element, text, speed = 100) {
     }
     
     type();
-}
-
-// === FORMULARZ KONTAKTOWY ===
-
-function initializeForm() {
-    const form = document.querySelector('form');
-    if (form) {
-        form.addEventListener('submit', handleFormSubmit);
-    }
 }
 
 // === FORMULARZ KONTAKTOWY ===
@@ -449,37 +457,52 @@ function fallbackCopyToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
-// === OBSŁUGA KLIKNIĘCIA NA PROJEKT ===
-document.addEventListener('DOMContentLoaded', function() {
-    // Obsługa kliknięcia na kartę projektu
-    const projectCards = document.querySelectorAll('#projects .card[data-project]');
-    projectCards.forEach(card => {
-        card.style.cursor = 'pointer';
-        card.addEventListener('click', function() {
-            const projectId = card.getAttribute('data-project');
-            if (projectId) {
-                window.location.href = `projects/project-${projectId}.html`;
-            }
-        });
-    });
-});
+// === KEYBOARD NAVIGATION & EASTER EGG ===
 
-// === KEYBOARD NAVIGATION ===
+const konamiCode = ['arrowup', 'arrowup', 'arrowdown', 'arrowdown', 'arrowleft', 'arrowright', 'arrowleft', 'arrowright', 'b', 'a'];
+let konamiIndex = 0;
+
+function activateMatrixMode() {
+    if (document.body.classList.contains('matrix-theme')) return;
+    document.body.className = 'matrix-theme';
+    showNotification('Matrix mode activated!', 'info');
+    startMatrixRain();
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.style.display = 'none';
+    }
+}
 
 // Nawigacja klawiaturą
 document.addEventListener('keydown', function(e) {
-    // ESC - powrót do strony głównej
-    if (e.key === 'Escape') {
-        showSection('home');
+    // Easter Egg check
+    const keyPressed = e.key.toLowerCase();
+    if (keyPressed === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+            activateMatrixMode();
+            konamiIndex = 0; // Zresetuj, aby można było wpisać ponownie
+        }
+    } else {
+        // if the key pressed is the first key of the code, start over
+        if (keyPressed === konamiCode[0]) {
+            konamiIndex = 1;
+        } else {
+            konamiIndex = 0;
+        }
     }
 
-    // Cyfry 1-5 - nawigacja do sekcji
+    // ESC - powrót do strony głównej
+    if (e.key === 'Escape') {
+        showSection('about');
+    }
+
+    // Cyfry 1-4 - nawigacja do sekcji
     const sectionMap = {
-        '1': 'home',
+        '1': 'about',
         '2': 'projects',
-        '3': 'about',
-        '4': 'skills',
-        '5': 'contact'
+        '3': 'skills',
+        '4': 'contact'
     };
 
     if (sectionMap[e.key]) {
@@ -489,9 +512,63 @@ document.addEventListener('keydown', function(e) {
     // T - toggle theme
     if (e.key.toLowerCase() === 't' && e.ctrlKey) {
         e.preventDefault();
-        toggleTheme();
+        // Nie przełączaj motywu, jeśli jesteśmy w trybie Matrix
+        if (!document.body.classList.contains('matrix-theme')) {
+            // toggleTheme();
+        }
     }
 });
+
+// === MATRIX RAIN EFFECT ===
+let matrixRainInterval = null;
+let matrixDrops = [];
+let matrixColumns = 0;
+const matrixFontSize = 14;
+const matrixChars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789';
+const matrixCharArray = matrixChars.split('');
+
+function drawMatrix() {
+    const canvas = document.getElementById('matrix-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#00ff41'; // Kolor liter
+    ctx.font = matrixFontSize + 'px monospace';
+
+    for (let i = 0; i < matrixDrops.length; i++) {
+        const text = matrixCharArray[Math.floor(Math.random() * matrixCharArray.length)];
+        ctx.fillText(text, i * matrixFontSize, matrixDrops[i] * matrixFontSize);
+
+        if (matrixDrops[i] * matrixFontSize > canvas.height && Math.random() > 0.975) {
+            matrixDrops[i] = 0;
+        }
+        matrixDrops[i]++;
+    }
+}
+
+function setupMatrixCanvas() {
+    const canvas = document.getElementById('matrix-canvas');
+    if (!canvas) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    matrixColumns = canvas.width / matrixFontSize;
+    matrixDrops = [];
+    for (let x = 0; x < matrixColumns; x++) {
+        matrixDrops[x] = 1;
+    }
+}
+
+function startMatrixRain() {
+    const canvas = document.getElementById('matrix-canvas');
+    if (!canvas || matrixRainInterval) return; // Już działa
+
+    setupMatrixCanvas();
+    matrixRainInterval = setInterval(drawMatrix, 33);
+}
+
 
 // === PERFORMANCE OPTIMIZATION ===
 
@@ -512,6 +589,9 @@ function debounce(func, wait) {
 const handleResize = debounce(() => {
     // Dostosuj layout jeśli potrzebne
     console.log('Window resized');
+    if (document.body.classList.contains('matrix-theme')) {
+        setupMatrixCanvas();
+    }
 }, 250);
 
 window.addEventListener('resize', handleResize);
@@ -533,7 +613,7 @@ function initializeA11y() {
 }
 
 // Uruchom ulepszenia dostępności
-document.addEventListener('DOMContentLoaded', initializeA11y);
+// document.addEventListener('DOMContentLoaded', initializeA11y); // Przeniesione
 
 // === EKSPORT FUNKCJI (jeśli używane jako moduł) ===
 if (typeof module !== 'undefined' && module.exports) {
