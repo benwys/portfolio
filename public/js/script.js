@@ -25,10 +25,10 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // Ten blok musi być na samym początku pliku!
 (function() {
     // Obsługa hash w URL przy starcie (przed DOMContentLoaded)
-    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'about';
-    const validSections = ['about', 'projects', 'skills', 'contact'];
+    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'start';
+    const validSections = ['start', 'about', 'projects', 'skills', 'contact'];
     if (!validSections.includes(sectionFromHash)) {
-        sectionFromHash = 'about';
+        sectionFromHash = 'start';
     }
     // Działaj tylko, jeśli docelowa sekcja istnieje (na stronie głównej).
     const targetSection = document.getElementById(sectionFromHash);
@@ -45,6 +45,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
         buttons.forEach(button => {
             const btnSection = button.textContent.trim().toLowerCase();
             if (
+                (btnSection === 'start' && sectionFromHash === 'start') ||
                 (btnSection === 'o mnie' && sectionFromHash === 'about') ||
                 (btnSection === 'projekty' && sectionFromHash === 'projects') ||
                 (btnSection === 'umiejętności' && sectionFromHash === 'skills') ||
@@ -87,10 +88,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Obsługa zmiany hash (np. cofanie/ponawianie w przeglądarce)
 window.addEventListener('hashchange', function() {
-    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'about';
-    const validSections = ['about', 'projects', 'skills', 'contact'];
+    let sectionFromHash = window.location.hash ? window.location.hash.substring(1) : 'start';
+    const validSections = ['start', 'about', 'projects', 'skills', 'contact'];
     if (!validSections.includes(sectionFromHash)) {
-        sectionFromHash = 'about';
+        sectionFromHash = 'start';
     }
     showSection(sectionFromHash, false);
 });
@@ -156,6 +157,7 @@ function showSection(sectionName, updateHash = true) {
         // Sprawdź czy tekst przycisku odpowiada sekcji
         const btnSection = button.textContent.trim().toLowerCase();
         if (
+            (btnSection === 'start' && sectionName === 'start') ||
             (btnSection === 'o mnie' && sectionName === 'about') ||
             (btnSection === 'projekty' && sectionName === 'projects') ||
             (btnSection === 'umiejętności' && sectionName === 'skills') ||
@@ -510,15 +512,16 @@ document.addEventListener('keydown', function(e) {
 
     // ESC - powrót do strony głównej
     if (e.key === 'Escape') {
-        showSection('about');
+        showSection('start');
     }
 
-    // Cyfry 1-4 - nawigacja do sekcji
+    // Cyfry 1-5 - nawigacja do sekcji
     const sectionMap = {
-        '1': 'about',
+        '1': 'start',
         '2': 'projects',
         '3': 'skills',
-        '4': 'contact'
+        '4': 'about',
+        '5': 'contact'
     };
 
     if (sectionMap[e.key]) {
