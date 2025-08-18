@@ -99,7 +99,7 @@ app.get('/projects/:slug', (req, res) => {
 
     const projectHtml = `
         <!DOCTYPE html>
-        <html lang="pl">
+        <html lang="pl" class="dark-theme">
         <head>
             <meta charset="UTF-8">
             <title>${attributes.title} | Portfolio Benedykta Wysockiego</title>

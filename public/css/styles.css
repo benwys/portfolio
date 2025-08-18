@@ -12,7 +12,8 @@ body {
     font-family: 'Courier New', monospace;
     min-height: 100vh;
     overflow-x: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    background-color: #001f3f; /* fallback to prevent white flash before theme variables load */
+    transition: background 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), color 0.3s ease;
     background-size: 200% 200%;
     animation: wave-animation 20s ease-in-out infinite;
 }
