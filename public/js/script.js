@@ -3,16 +3,51 @@
 // Zmienne globalne
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Cache selektorów DOM dla lepszej wydajności
+const DOMCache = {
+    sections: null,
+    navButtons: null,
+    projectsGrid: null,
+    
+    initialize() {
+        this.sections = document.querySelectorAll('.section');
+        this.navButtons = document.querySelectorAll('.nav-btn');
+        this.projectsGrid = document.getElementById('projects-grid');
+    }
+};
+
+// Mapowanie sekcji dla eliminacji duplikacji
+const SECTION_MAPPING = {
+    'start': 'start',
+    'o mnie': 'about',
+    'projekty': 'projects',
+    'umiejętności': 'skills',
+    'kontakt': 'contact'
+};
+
+function getSectionFromButtonText(buttonText) {
+    return SECTION_MAPPING[buttonText.trim().toLowerCase()];
+}
+
 // --- NATYCHMIASTOWE ZASTOSOWANIE MOTYWU --- 
 // Musi być na samej górze, aby uniknąć migotania.
 (function() {
     let theme = 'dark';
-    const navigationType = performance.getEntriesByType("navigation")[0].type;
-
-    if (navigationType === 'reload') {
-        sessionStorage.removeItem('portfolio-theme');
-    } else {
-        theme = sessionStorage.getItem('portfolio-theme') || 'dark';
+    
+    try {
+        const navigationEntries = performance.getEntriesByType("navigation");
+        if (navigationEntries.length > 0 && navigationEntries[0].type === 'reload') {
+            sessionStorage.removeItem('portfolio-theme');
+        } else {
+            theme = sessionStorage.getItem('portfolio-theme') || 'dark';
+        }
+    } catch (e) {
+        // Fallback dla starszych przeglądarek
+        try {
+            theme = sessionStorage.getItem('portfolio-theme') || 'dark';
+        } catch (storageError) {
+            theme = 'dark';
+        }
     }
 
     document.documentElement.className = `${theme}-theme`;
@@ -60,24 +95,14 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
+    DOMCache.initialize(); // Inicjalizuj cache selektorów DOM
     initializeTheme();
     initializeTypeWriter();
     initializeForm();
     initializeScrollEffects();
     initializeA11y();
+    initializeProjects(); // Dodano ładowanie projektów
     // Nie wywołuj showSection na starcie, bo już to zrobiliśmy powyżej
-
-    // Obsługa kliknięcia na kartę projektu
-    const projectCards = document.querySelectorAll('#projects .card[data-project]');
-    projectCards.forEach(card => {
-        card.style.cursor = 'pointer';
-        card.addEventListener('click', function() {
-            const projectId = card.getAttribute('data-project');
-            if (projectId) {
-                window.location.href = `projects/project-${projectId}.html`;
-            }
-        });
-    });
 
     // Auto-aktywacja trybu Matrix po północy
     const currentHour = new Date().getHours();
@@ -145,24 +170,18 @@ function showSection(sectionName, updateHash = true) {
     }
 
     // Ukryj wszystkie sekcje i aktywuj docelową
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        section.classList.remove('active');
-    });
+    if (DOMCache.sections) {
+        DOMCache.sections.forEach(section => {
+            section.classList.remove('active');
+        });
+    }
     targetSection.classList.add('active');
 
     // Zaktualizuj aktywny przycisk nawigacji
-    const buttons = document.querySelectorAll('.nav-btn');
+    const buttons = DOMCache.navButtons || document.querySelectorAll('.nav-btn');
     buttons.forEach(button => {
-        // Sprawdź czy tekst przycisku odpowiada sekcji
-        const btnSection = button.textContent.trim().toLowerCase();
-        if (
-            (btnSection === 'start' && sectionName === 'start') ||
-            (btnSection === 'o mnie' && sectionName === 'about') ||
-            (btnSection === 'projekty' && sectionName === 'projects') ||
-            (btnSection === 'umiejętności' && sectionName === 'skills') ||
-            (btnSection === 'kontakt' && sectionName === 'contact')
-        ) {
+        const mappedSection = getSectionFromButtonText(button.textContent);
+        if (mappedSection === sectionName) {
             button.classList.add('active');
         } else {
             button.classList.remove('active');
@@ -259,10 +278,6 @@ async function handleFormSubmit(e) {
     }
 }
 
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
 
 function showNotification(message, type = 'info') {
     // Usuń poprzednie powiadomienia
@@ -367,16 +382,6 @@ function handleIntersection(entries) {
 
 // === DODATKOWE FUNKCJE ===
 
-// Smooth scroll dla nawigacji
-function smoothScrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
-    }
-}
 
 // Funkcja do animacji liczb (przydatna dla statystyk)
 function animateNumber(element, targetNumber, duration = 2000) {
@@ -394,18 +399,6 @@ function animateNumber(element, targetNumber, duration = 2000) {
     }, 16);
 }
 
-// Funkcja do ładowania projektów z zewnętrznego źródła (placeholder)
-async function loadProjects() {
-    // Placeholder dla przyszłego API
-    try {
-        // const response = await fetch('/api/projects');
-        // const projects = await response.json();
-        // renderProjects(projects);
-        console.log('Funkcja loadProjects gotowa do implementacji API');
-    } catch (error) {
-        console.error('Błąd ładowania projektów:', error);
-    }
-}
 
 // Funkcja do renderowania projektów
 function renderProjects(projects) {
@@ -424,20 +417,44 @@ function renderProjects(projects) {
 function createProjectCard(project) {
     const card = document.createElement('div');
     card.className = 'card';
-    card.setAttribute('data-project', project.id); // Dodano atrybut data-project
-    
-    card.innerHTML = `
-        <h3>${project.title}</h3>
-        <p>${project.description}</p>
+    // Używamy sluga do nawigacji, a nie ID
+    card.setAttribute('data-slug', project.slug);
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+        window.location.href = `/projects/${project.slug}`;
+    });
+
+    // Generowanie wewnętrznego HTML karty
+    const innerHTML = `
+        <h3>${project.title || 'Brak tytułu'}</h3>
+        <p>${project.description || 'Brak opisu.'}</p>
         <div class="tech-stack">
-            ${project.technologies.map(tech => 
+            ${(project.technologies || []).map(tech => 
                 `<span class="tech-tag">${tech}</span>`
             ).join('')}
         </div>
-        ${project.link ? `<a href="${project.link}" class="project-link" target="_blank">Zobacz projekt</a>` : ''}
+        ${project.link ? `<a href="${project.link}" class="project-link" target="_blank" onclick="event.stopPropagation()">Zobacz na zewnątrz</a>` : ''}
     `;
-    
+
+    card.innerHTML = innerHTML;
     return card;
+}
+
+// --- NOWA FUNKCJA DO ŁADOWANIA PROJEKTÓW ---
+async function initializeProjects() {
+    if (DOMCache.projectsGrid) {
+        try {
+            const response = await fetch('/api/projects');
+            if (!response.ok) {
+                throw new Error(`Błąd HTTP: ${response.status}`);
+            }
+            const projects = await response.json();
+            renderProjects(projects);
+        } catch (error) {
+            console.error('Błąd podczas ładowania projektów:', error);
+            DOMCache.projectsGrid.innerHTML = '<p class="error-message">Nie udało się załadować projektów. Spróbuj odświeżyć stronę.</p>';
+        }
+    }
 }
 
 // Funkcja do kopiowania kontaktu
@@ -586,7 +603,8 @@ function startMatrixRain() {
 
     canvas.style.display = 'block';
     setupMatrixCanvas();
-    matrixRainInterval = setInterval(drawMatrix, 33);
+    // Zwiększono interval z 33ms do 50ms dla lepszej wydajności
+    matrixRainInterval = setInterval(drawMatrix, 50);
 }
 
 function stopMatrixRain() {

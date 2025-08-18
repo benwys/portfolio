@@ -32,26 +32,18 @@
             <button class="nav-btn" onclick="showSection('start')">Start</button>
             <button class="nav-btn" onclick="showSection('projects')">Projekty</button>
             <button class="nav-btn" onclick="showSection('skills')">Umiejętności</button>
-            <button class="nav-btn" onclick="showSection('about')">O Mnie</button>
+            <button class="nav-btn" onclick="showSection('about')">O mnie</button>
             <button class="nav-btn" onclick="showSection('contact')">Kontakt</button>
         </nav>
 
         <main>
             <section id="start" class="section">
-
-
                 <div class="about-content">
-
-
                     <h2>Witaj w moim portfolio!</h2>
-
-
-                    <p>Jestem studentem Automatyki i Robotyki, pasjonatem nowych technologii i programowania. Znajdziesz tutaj moje projekty, umiejętności oraz informacje o mnie. Zapraszam do przeglądania!</p>
-
-
+                    <p>Jestem studentem Automatyki i Robotyki, pasjonatem nowych technologii i programowania. Znajdziesz tutaj moje projekty, umiejętności oraz informacje. Zapraszam do przeglądania!</p>
                 </div>
             </section>
-            <section id="about" class="section" style="display: none;">
+            <section id="about" class="section">
                 <div class="about-content">
                     <h2>Witaj w moim technicznym świecie</h2>
                 <p>Jestem studentem Automatyki i Robotyki Stosowanej na Politechnice Warszawskiej, z zamiłowaniem do rozwiązań technicznych, elektroniki oraz systemów sterowania. Od początku studiów staram się łączyć wiedzę akademicką z praktyką — realizując projekty DIY, biorąc udział w kursach technicznych i angażując się w działalność koła naukowego ZTS (Zrób To Sam).</p>
@@ -144,42 +136,5 @@
     </div>
 
     <script src="js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/api/projects')
-                .then(response => response.json())
-                .then(projects => {
-                    const grid = document.getElementById('projects-grid');
-                    if (!grid) return;
-
-                    projects.forEach(project => {
-                        const card = document.createElement('div');
-                        card.className = 'card';
-                        card.onclick = () => { window.location.href = `/projects/${project.slug}`; };
-
-                        const title = document.createElement('h3');
-                        title.textContent = project.title;
-
-                        const description = document.createElement('p');
-                        description.textContent = project.description;
-
-                        const techStack = document.createElement('div');
-                        techStack.className = 'tech-stack';
-                        project.technologies.forEach(tech => {
-                            const techTag = document.createElement('span');
-                            techTag.className = 'tech-tag';
-                            techTag.textContent = tech;
-                            techStack.appendChild(techTag);
-                        });
-
-                        card.appendChild(title);
-                        card.appendChild(description);
-                        card.appendChild(techStack);
-                        grid.appendChild(card);
-                    });
-                })
-                .catch(error => console.error('Błąd podczas ładowania projektów:', error));
-        });
-    </script>
 </body>
 </html>
