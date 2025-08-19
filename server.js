@@ -15,6 +15,26 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Ustawienie 'trust proxy' jest kluczowe, gdy aplikacja działa za reverse proxy (np. Cloudflare)
+app.enable('trust proxy');
+
+// Middleware do wymuszenia HTTPS i ustawienia HSTS
+app.use((req, res, next) => {
+    // Sprawdzenie, czy połączenie jest bezpieczne (przez nagłówek od proxy lub req.secure)
+    const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+
+    if (isSecure) {
+        // Jeśli jest bezpieczne, ustaw nagłówek HSTS
+        // max-age=31536000 to 1 rok. includeSubDomains oznacza, że polityka dotyczy też subdomen.
+        res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+        next();
+    } else {
+        // Jeśli nie jest bezpieczne, przekieruj na HTTPS
+        // Użyj kodu 301 (Moved Permanently) dla SEO
+        res.redirect(301, `https://${req.headers.host}${req.originalUrl}`);
+    }
+});
+
 // Endpoint do wysyłania wiadomości (bez zmian)
 app.post('/api/send-message', async (req, res) => {
     const discordWebhookUrl = process.env.DISCORD_WEBHOOK_URL;
