@@ -532,18 +532,23 @@ document.addEventListener('keydown', function(e) {
         showSection('start');
     }
 
-    // Cyfry 1-5 - nawigacja do sekcji
-    // const sectionMap = {
-    //     '1': 'start',
-    //     '2': 'projects',
-    //     '3': 'skills',
-    //     '4': 'about',
-    //     '5': 'contact'
-    // };
+    // Sprawdź, czy fokus nie jest na elemencie formularza
+    const isTyping = e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA';
 
-    // if (sectionMap[e.key]) {
-    //     showSection(sectionMap[e.key]);
-    // }
+    // Cyfry 1-5 - nawigacja do sekcji (tylko gdy nie piszemy)
+    if (!isTyping) {
+        const sectionMap = {
+            '1': 'start',
+            '2': 'projects',
+            '3': 'skills',
+            '4': 'about',
+            '5': 'contact'
+        };
+
+        if (sectionMap[e.key]) {
+            showSection(sectionMap[e.key]);
+        }
+    }
 
     // T - toggle theme
     if (e.key.toLowerCase() === 't' && e.ctrlKey) {
