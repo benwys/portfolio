@@ -533,17 +533,17 @@ document.addEventListener('keydown', function(e) {
     }
 
     // Cyfry 1-5 - nawigacja do sekcji
-    const sectionMap = {
-        '1': 'start',
-        '2': 'projects',
-        '3': 'skills',
-        '4': 'about',
-        '5': 'contact'
-    };
+    // const sectionMap = {
+    //     '1': 'start',
+    //     '2': 'projects',
+    //     '3': 'skills',
+    //     '4': 'about',
+    //     '5': 'contact'
+    // };
 
-    if (sectionMap[e.key]) {
-        showSection(sectionMap[e.key]);
-    }
+    // if (sectionMap[e.key]) {
+    //     showSection(sectionMap[e.key]);
+    // }
 
     // T - toggle theme
     if (e.key.toLowerCase() === 't' && e.ctrlKey) {
