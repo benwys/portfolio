@@ -415,28 +415,6 @@ footer {
     user-select: none;
 }
 
-/* Tables */
-.card table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Płynne przewijanie na iOS */
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-.card th, .card td {
-    padding: 12px 15px;
-    border: 1px solid var(--border-color);
-    white-space: nowrap; /* Zapobiega łamaniu tekstu w komórkach */
-    text-align: left;
-}
-
-.card th {
-    background-color: var(--skill-bg);
-    font-weight: bold;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
     h1 {
