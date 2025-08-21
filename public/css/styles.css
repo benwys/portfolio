@@ -218,6 +218,25 @@ nav {
     margin-bottom: 15px;
 }
 
+.card ul,
+.card ol {
+    padding-left: 20px;
+    margin-left: 1.2em;
+}
+
+.card li {
+    margin-bottom: 10px;
+}
+
+.card a {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.card a:hover {
+    color: var(--accent-color);
+}
+
 /* Project Image */
 .project-image {
     max-width: 100%;

@@ -87,7 +87,7 @@ app.get('/api/projects', (req, res) => {
                     ...attributes,
                 };
             })
-            .sort((a, b) => (a.order || 99) - (b.order || 99)); // Sortowanie po polu 'order'
+            .sort((a, b) => (b.order || 99) - (a.order || 99)); // Sortowanie po polu 'order' (malejąco)
         res.json(projects);
     });
 });
