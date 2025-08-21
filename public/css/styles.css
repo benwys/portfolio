@@ -419,10 +419,16 @@ footer {
 @media (max-width: 768px) {
     h1 {
         font-size: 2rem;
+        word-break: break-word; /* Lepsze łamanie słów dla nagłówka */
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        letter-spacing: 2px;
     }
     
     nav {
-        gap: 15px;
+        gap: 10px; /* Zmniejszony odstęp */
     }
     
     .nav-btn {
@@ -434,11 +440,48 @@ footer {
         grid-template-columns: 1fr;
         gap: 20px;
     }
+
+    .card {
+        padding: 20px;
+    }
+
+    .card p, .card li, .card h3 {
+        word-wrap: break-word; /* Zapobiega przepełnieniu */
+    }
     
     .theme-toggle {
         position: static;
         text-align: right;
         margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    .nav-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    header {
+        padding: 30px 0;
+        margin-bottom: 20px;
+    }
+
+    footer {
+        padding: 30px 15px;
+        margin-top: 40px;
     }
 }
 
