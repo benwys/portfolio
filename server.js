@@ -104,11 +104,7 @@ app.get('/projects/:slug', (req, res) => {
 
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { attributes, body } = fm(fileContent);
-        const renderer = new marked.Renderer();
-    renderer.table = (header, body) => {
-        return `<div class="table-wrapper"><table><thead>${header}</thead><tbody>${body}</tbody></table></div>`;
-    };
-    const contentHtml = marked.parse(body, { renderer });
+    const contentHtml = marked.parse(body);
 
     const techTags = attributes.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
 
